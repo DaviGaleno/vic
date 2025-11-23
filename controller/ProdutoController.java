@@ -1,43 +1,32 @@
 package controller;
 
-import java.util.Scanner;
-
 import model.Mercado;
-import service.MercadoService;
 import service.ProdutoService;
+
+import java.util.Scanner;
 
 public class ProdutoController {
 
-    private Scanner entrada = new Scanner(System.in);
     private ProdutoService produtoService = new ProdutoService();
-    private MercadoService mercadoService = new MercadoService();
+    private Scanner scanner = new Scanner(System.in);
 
-    public void cadastrarProduto() {
-
-        System.out.print("Nome do mercado onde deseja cadastrar: ");
-        String nomeMercado = entrada.nextLine();
-
-        Mercado mercado = mercadoService.buscarPorNome(nomeMercado);
-
-        if (mercado == null) {
-            System.out.println("Mercado não encontrado!");
-            return;
-        }
+    public void cadastrarProduto(Mercado mercadoLogado) {
 
         System.out.print("Nome do produto: ");
-        String nome = entrada.nextLine();
+        String nome = scanner.nextLine();
 
         System.out.print("Preço: ");
-        double preco = entrada.nextDouble();
+        double preco = scanner.nextDouble();
 
-        System.out.print("Quantidade: ");
-        int qtd = entrada.nextInt();
-        entrada.nextLine();
+        System.out.print("Estoque: ");
+        int estoque = scanner.nextInt();
+        scanner.nextLine();
 
-        produtoService.cadastrar(mercado, nome, preco, qtd);
+        produtoService.cadastrar(mercadoLogado, nome, preco, estoque);
+        System.out.println("Produto cadastrado!");
     }
 
-    public void listarProdutos() {
-        produtoService.listar();
+    public void listarProdutos(Mercado mercadoLogado) {
+        produtoService.listar(mercadoLogado);
     }
 }

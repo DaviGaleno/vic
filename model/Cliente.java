@@ -4,10 +4,14 @@ public class Cliente {
 
     private String nome;
     private String cpf;
+    private int idade;
+    private String senha;
 
-    public Cliente(String nome, String cpf) {
+    public Cliente(String nome, String cpf, int idade, String senha) {
         this.nome = nome;
         this.cpf = cpf;
+        this.idade = idade;
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -18,30 +22,16 @@ public class Cliente {
         return cpf;
     }
 
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public int getIdade() {
+        return idade;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public String getSenha() {
+        return senha;
     }
 
     @Override
     public String toString() {
-        return "Cliente: " + nome + " | CPF: " + cpf;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Cliente outro = (Cliente) obj;
-        return cpf != null && cpf.equals(outro.getCpf());
-    }
-
-    @Override
-    public int hashCode() {
-        return cpf == null ? 0 : cpf.hashCode();
+        return "Cliente: " + nome + " | CPF: " + cpf + " | Idade: " + idade;
     }
 }

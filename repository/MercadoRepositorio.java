@@ -1,8 +1,8 @@
 package repository;
 
+import model.Mercado;
 import java.util.ArrayList;
 import java.util.List;
-import model.Mercado;
 
 public class MercadoRepositorio {
 
@@ -12,8 +12,12 @@ public class MercadoRepositorio {
         mercados.add(mercado);
     }
 
-    public List<Mercado> listar() {
-        return mercados;
+    public Mercado buscarPorCnpj(String cnpj) {
+        for (Mercado m : mercados) {
+            if (m.getCnpj().equals(cnpj)) return m;
+        }
+        return null;
     }
-}
 
+    public List<Mercado> getTodos() { return mercados; }
+}

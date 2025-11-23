@@ -2,24 +2,30 @@ package service;
 
 import model.Mercado;
 import model.Produto;
-import repository.ProdutoRepositorio;
+
+import java.util.List;
 
 public class ProdutoService {
 
-    private ProdutoRepositorio repo = new ProdutoRepositorio();
-
-    public void cadastrar(Mercado mercado, String nome, double preco, int quantidade) {
-        Produto produto = new Produto(nome, preco, quantidade);
+    public void cadastrar(Mercado mercado, String nome, double preco, int estoque) {
+        Produto produto = new Produto(nome, preco, estoque);
         mercado.adicionarProduto(produto);
-        repo.salvar(produto);
-        System.out.println("Produto cadastrado no mercado: " + mercado.getNome());
     }
 
-    public void listar() {
-        for (Produto p : repo.listar()) {
-            System.out.println(p);
+    public void listar(Mercado mercado) {
+        List<Produto> produtos = mercado.getProdutos();
+
+        if (produtos.isEmpty()) {
+            System.out.println("Nenhum produto cadastrado.");
+            return;
+        }
+
+        System.out.println("\n=== PRODUTOS DO MERCADO ===");
+        for (Produto p : produtos) {
+            System.out.println("Nome: " + p.getNome());
+            System.out.println("Preço: R$ " + p.getPreco());
+            System.out.println("Estoque: " + p.getEstoque());
+            System.out.println("-----------------------------");
         }
     }
 }
-
-

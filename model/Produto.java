@@ -4,24 +4,24 @@ public class Produto {
 
     private String nome;
     private double preco;
-    private int quantidade;
+    private int estoque;
 
-    public Produto(String nome, double preco, int quantidade) {
+    public Produto(String nome, double preco, int estoque) {
         this.nome = nome;
         this.preco = preco;
-        this.quantidade = quantidade;
+        this.estoque = estoque;
     }
 
     public String getNome() { return nome; }
     public double getPreco() { return preco; }
-    public int getQuantidade() { return quantidade; }
+    public int getEstoque() { return estoque; }
 
-    public void reduzirQuantidade(int qtd) {
-        this.quantidade -= qtd;
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
     }
 
     @Override
     public String toString() {
-        return "Produto: " + nome + " | Preço: R$" + preco + " | Estoque: " + quantidade;
+        return nome + " | R$" + preco + " | Estoque: " + estoque;
     }
 }

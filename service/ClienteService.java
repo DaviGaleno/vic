@@ -1,23 +1,33 @@
 package service;
 
 import model.Cliente;
-import repository.ClienteRepositorio;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteService {
 
-    private ClienteRepositorio repo = new ClienteRepositorio();
+    private List<Cliente> clientes = new ArrayList<>();
 
-    public void cadastrar(String nome, String cpf) {
-        Cliente c = new Cliente(nome, cpf);
-        repo.salvar(c);
-        System.out.println("Cliente cadastrado com sucesso!");
+
+    public void cadastrar(Cliente cliente) {
+        clientes.add(cliente);
     }
 
-    public void listar() {
-        for (Cliente c : repo.listar()) {
-            System.out.println(c);
+    public void cadastrar(String nome, String cpf, int idade, String senha) {
+        Cliente cliente = new Cliente(nome, cpf, idade, senha);
+        clientes.add(cliente);
+    }
+
+    public Cliente login(String cpf, String senha) {
+        for (Cliente c : clientes) {
+            if (c.getCpf().equals(cpf) && c.getSenha().equals(senha)) {
+                return c;
+            }
         }
+        return null;
+    }
+
+    public List<Cliente> listar() {
+        return clientes;
     }
 }
-
-

@@ -1,51 +1,143 @@
+import java.util.Scanner;
+
 import controller.ClienteController;
 import controller.MercadoController;
-import controller.ProdutoController;
-
-import java.util.Scanner;
+import model.Cliente;
+import service.ClienteService;
+import service.MercadoService;
+import service.ProdutoService;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Scanner entrada = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        ClienteController clienteController = new ClienteController();
-        MercadoController mercadoController = new MercadoController();
-        ProdutoController produtoController = new ProdutoController();
+        // Serviços do sistema
+        MercadoService mercadoService = new MercadoService();
+        ProdutoService produtoService = new ProdutoService();
+        ClienteService clienteService = new ClienteService();
 
-        int opcao = -1;
+        // Controllers
+        MercadoController mercadoController = new MercadoController(mercadoService, produtoService, sc);
+        ClienteController clienteController = new ClienteController(clienteService, sc);
 
-        while (opcao != 0) {
+        int opc = -1;
 
-            System.out.println("\n=== MENU ===");
-            System.out.println("1 - Cadastrar mercado");
-            System.out.println("2 - Cadastrar produto");
-            System.out.println("3 - Cadastrar cliente");
-            System.out.println("4 - Listar mercados");
-            System.out.println("5 - Listar produtos");
-            System.out.println("6 - Listar clientes");
+        while (opc != 0) {
+
+            System.out.println("\n=== MENU PRINCIPAL ===");
+            System.out.println("1 - Menu do Mercado");
+            System.out.println("2 - Menu do Cliente");
             System.out.println("0 - Sair");
+            System.out.print("Escolha: ");
 
-            opcao = entrada.nextInt();
-            entrada.nextLine();
+            try {
+                opc = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                opc = -1;
+            }
 
-            switch (opcao) {
-
-                case 1: mercadoController.cadastrarMercado(); break;
-                case 2: produtoController.cadastrarProduto(); break;
-                case 3: clienteController.cadastrarCliente(); break;
-                case 4: mercadoController.listarMercados(); break;
-                case 5: produtoController.listarProdutos(); break;
-                case 6: clienteController.listarClientes(); break;
-                case 0:
-                    System.out.println("Saindo...");
+            switch (opc) {
+                case 1:
+                    menuMercado(mercadoController, sc);
                     break;
+
+                case 2:
+                    menuCliente(clienteController, sc);
+                    break;
+
+                case 0:
+                    System.out.println("Encerrando...");
+                    break;
+
                 default:
                     System.out.println("Opção inválida!");
             }
         }
 
-        entrada.close();
+        sc.close();
+    }
+
+    private static void menuMercado(MercadoController controller, Scanner sc) {
+
+        int op = -1;
+
+        while (op != 0) {
+
+            System.out.println("\n=== MENU DO MERCADO ===");
+            System.out.println("1 - Cadastrar Mercado");
+            System.out.println("2 - Login Mercado");
+            System.out.println("3 - Cadastrar Produto (precisa estar logado)");
+            System.out.println("0 - Voltar");
+            System.out.print("Escolha: ");
+
+            try {
+                op = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                op = -1;
+            }
+
+            switch (op) {
+
+                case 1:
+                    controller.cadastrarMercado();
+                    break;
+
+                case 2:
+                    controller.loginMercado();
+                    break;
+
+                case 3:
+                    controller.cadastrarProduto();
+                    break;
+
+                case 0:
+                    break;
+
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private static void menuCliente(ClienteController controller, Scanner sc) {
+
+        int op = -1;
+
+        while (op != 0) {
+
+            System.out.println("\n=== MENU DO CLIENTE ===");
+            System.out.println("1 - Cadastrar Cliente");
+            System.out.println("2 - Login Cliente");
+            System.out.println("0 - Voltar");
+            System.out.print("Escolha: ");
+
+            try {
+                op = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                op = -1;
+            }
+
+            switch (op) {
+
+                case 1:
+                    controller.cadastrarCliente();
+                    break;
+
+                case 2:
+                    Cliente cliente = controller.loginCliente();
+                    if (cliente != null) {
+                        controller.menuCliente(cliente);
+                    }
+                    break;
+
+                case 0:
+                    break;
+
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
     }
 }
