@@ -47,7 +47,6 @@ public class ProdutoController {
             return;
         }
 
-        // === MOSTRAR CATEGORIAS DA ENUM ===
         System.out.println("\nSelecione a categoria:");
         for (CategoriaProduto c : CategoriaProduto.values()) {
             System.out.println(c.ordinal() + " - " + c);
@@ -69,7 +68,6 @@ public class ProdutoController {
 
         CategoriaProduto categoria = CategoriaProduto.values()[catIndex];
 
-        // === AGORA SIM, CHAMADA CORRETA ===
         produtoService.cadastrar(mercadoLogado, nome, preco, estoque, categoria);
 
         System.out.println("Produto cadastrado com sucesso!");

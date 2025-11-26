@@ -115,7 +115,7 @@ public class MercadoController {
         }
 
         double total = vendaService.calcularTotalFaturado(mercadoLogado);
-        System.out.println("\n💰 FATURAMENTO TOTAL: R$ " + total);
+        System.out.println("\n FATURAMENTO TOTAL: R$ " + total);
     }
 
 
