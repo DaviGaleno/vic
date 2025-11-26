@@ -7,6 +7,8 @@ public class Sessao {
 
     public static Mercado mercadoLogado = null;
     public static Cliente clienteLogado = null;
+    public static CompraService compraService = new CompraService();
+
 
     public static void sair() {
         mercadoLogado = null;

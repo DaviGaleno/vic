@@ -6,6 +6,7 @@ import model.Cliente;
 import service.ClienteService;
 import service.MercadoService;
 import service.ProdutoService;
+import service.VendaService;
 
 public class Main {
 
@@ -13,13 +14,13 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        // Serviços do sistema
         MercadoService mercadoService = new MercadoService();
         ProdutoService produtoService = new ProdutoService();
         ClienteService clienteService = new ClienteService();
+        VendaService vendaService = new VendaService();
 
-        // Controllers
-        MercadoController mercadoController = new MercadoController(mercadoService, produtoService, sc);
+
+        MercadoController mercadoController = new MercadoController(mercadoService, produtoService, vendaService, sc);
         ClienteController clienteController = new ClienteController(clienteService, sc);
 
         int opc = -1;
@@ -69,6 +70,7 @@ public class Main {
             System.out.println("1 - Cadastrar Mercado");
             System.out.println("2 - Login Mercado");
             System.out.println("3 - Cadastrar Produto (precisa estar logado)");
+            System.out.println("4 - Relatório de Vendas");
             System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
 
@@ -90,6 +92,10 @@ public class Main {
 
                 case 3:
                     controller.cadastrarProduto();
+                    break;
+
+                case 4:
+                    controller.relatorioVendas();
                     break;
 
                 case 0:

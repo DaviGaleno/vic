@@ -3,34 +3,19 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mercado {
+public class Mercado extends Cadastro {
 
-    private String nomeFantasia;
     private String cnpj;
-    private String senha;
-
     private List<Produto> produtos = new ArrayList<>();
+    private List<Venda> vendas = new ArrayList<>();
 
     public Mercado(String nomeFantasia, String cnpj, String senha) {
-        this.nomeFantasia = nomeFantasia;
+        super(nomeFantasia, senha);
         this.cnpj = cnpj;
-        this.senha = senha;
-    }
-
-    public String getNomeFantasia() {
-        return nomeFantasia;
-    }
-
-    public String getNome() {
-        return nomeFantasia;
     }
 
     public String getCnpj() {
         return cnpj;
-    }
-
-    public String getSenha() {
-        return senha;
     }
 
     public List<Produto> getProdutos() {
@@ -41,8 +26,18 @@ public class Mercado {
         produtos.add(produto);
     }
 
+
+
+    public void registrarVenda(Venda venda) {
+        vendas.add(venda);
+    }
+
+    public List<Venda> getVendas() {
+        return vendas;
+    }
+
     @Override
     public String toString() {
-        return "Mercado: " + nomeFantasia + " | CNPJ: " + cnpj;
+        return "Mercado: " + nome + " | CNPJ: " + cnpj;
     }
 }
