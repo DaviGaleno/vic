@@ -19,9 +19,9 @@ public class Main {
         ClienteService clienteService = new ClienteService();
         VendaService vendaService = new VendaService();
 
-
         MercadoController mercadoController = new MercadoController(mercadoService, produtoService, vendaService, sc);
-        ClienteController clienteController = new ClienteController(clienteService, sc);
+
+        ClienteController clienteController = new ClienteController(clienteService, vendaService, sc);
 
         int opc = -1;
 

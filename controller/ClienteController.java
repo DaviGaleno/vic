@@ -13,10 +13,12 @@ import java.util.Scanner;
 public class ClienteController {
 
     private ClienteService clienteService;
+    private VendaService vendaService;
     private Scanner scanner;
 
-    public ClienteController(ClienteService clienteService, Scanner scanner) {
+    public ClienteController(ClienteService clienteService, VendaService vendaService, Scanner scanner) {
         this.clienteService = clienteService;
+        this.vendaService = vendaService;
         this.scanner = scanner;
     }
 
@@ -38,9 +40,7 @@ public class ClienteController {
         System.out.println("Cliente cadastrado com sucesso!");
     }
 
-
     public Cliente loginCliente() {
-
         System.out.print("CPF: ");
         String cpf = scanner.nextLine();
 
@@ -110,7 +110,7 @@ public class ClienteController {
         Compra compra = new Compra(clienteLogado);
 
         while (true) {
-            System.out.println("\nDigite o nome do produto que deseja comprar (ou 0 para finalizar): ");
+            System.out.println("\nDigite o nome do produto (ou 0 para finalizar): ");
             String nome = scanner.nextLine();
 
             if (nome.equals("0")) break;
@@ -138,8 +138,8 @@ public class ClienteController {
             }
 
             produto.reduzirEstoque(qtd);
-
             compra.adicionarItem(new ItemCompra(produto, qtd));
+
             System.out.println("Produto adicionado ao carrinho!");
         }
 
@@ -150,6 +150,7 @@ public class ClienteController {
 
         Sessao.compraService.registrarCompra(compra);
 
+        // === REGISTRAR VENDAS CORRETAMENTE ===
         for (var item : compra.getItens()) {
             vendaService.registrarVenda(
                     item.getProduto().getMercado(),
@@ -164,21 +165,5 @@ public class ClienteController {
 
         System.out.println("COMPRA FINALIZADA!");
         System.out.println("Total: R$ " + compra.getTotal());
-        System.out.println("Itens comprados:");
-
-        for (var item : compra.getItens()) {
-            System.out.println("- " + item.getProduto().getNome() + " x" + item.getQuantidade());
-        }
     }
-
-
-    private VendaService vendaService;
-
-    public ClienteController(ClienteService clienteService, VendaService vendaService, Scanner scanner) {
-        this.clienteService = clienteService;
-        this.vendaService = vendaService;
-        this.scanner = scanner;
-    }
-
-
 }

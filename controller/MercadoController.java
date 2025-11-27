@@ -2,7 +2,6 @@ package controller;
 
 import enums.CategoriaProduto;
 import model.Mercado;
-import model.Venda;
 import service.MercadoService;
 import service.ProdutoService;
 import service.Sessao;
@@ -17,7 +16,14 @@ public class MercadoController {
     private VendaService vendaService;
     private Scanner scanner;
 
-    public MercadoController(MercadoService mercadoService, ProdutoService produtoService, VendaService vendaService, Scanner scanner) {
+    public MercadoController(
+            MercadoService mercadoService,
+            ProdutoService produtoService,
+            VendaService vendaService,
+            Scanner scanner
+    )
+
+    {
         this.mercadoService = mercadoService;
         this.produtoService = produtoService;
         this.vendaService = vendaService;
@@ -90,33 +96,33 @@ public class MercadoController {
     }
 
     public void relatorioVendas() {
+        var mercado = Sessao.mercadoLogado;
 
-        Mercado mercadoLogado = Sessao.mercadoLogado;
-        if (mercadoLogado == null) {
-            System.out.println("Nenhum mercado logado.");
+        if (mercado == null) {
+            System.out.println("Você precisa estar logado!");
             return;
         }
 
-        System.out.println("\n===== RELATÓRIO DE VENDAS — " + mercadoLogado.getNome() + " =====");
-
-        var vendas = vendaService.listarVendas(mercadoLogado);
+        var vendas = vendaService.listarVendas(mercado);
 
         if (vendas.isEmpty()) {
-            System.out.println("Nenhuma venda registrada até o momento.");
+            System.out.println("Nenhuma venda registrada.");
             return;
         }
 
-        for (Venda v : vendas) {
-            System.out.println("\nProduto: " + v.getNomeProduto());
-            System.out.println("Quantidade: " + v.getQuantidade());
-            System.out.println("Preço Unitário: R$" + v.getPrecoUnitario());
-            System.out.println("Total da Venda: R$" + v.getTotalVenda());
-            System.out.println("Cliente: " + v.getCliente().getNome());
+        System.out.println("\n=== RELATÓRIO DE VENDAS DO MERCADO: " + mercado.getNome() + " ===");
+
+        for (var v : vendas) {
+            System.out.println("Produto: " + v.getNomeProduto() +
+                    " | Quantidade: " + v.getQuantidade() +
+                    " | Total: R$ " + v.getTotalVenda() +
+                    " | Cliente: " + v.getCliente().getNome());
         }
 
-        double total = vendaService.calcularTotalFaturado(mercadoLogado);
-        System.out.println("\n FATURAMENTO TOTAL: R$ " + total);
+        System.out.println("\nTOTAL FATURADO: R$ " + vendaService.calcularTotalFaturado(mercado));
     }
+
+
 
 
     public void listarProdutos() {
