@@ -1,9 +1,6 @@
 package controller;
 
-import model.Cliente;
-import model.Compra;
-import model.ItemCompra;
-import model.Venda;
+import model.*;
 import service.ClienteService;
 import service.Sessao;
 import service.VendaService;
@@ -12,9 +9,9 @@ import java.util.Scanner;
 
 public class ClienteController {
 
-    private ClienteService clienteService;
-    private VendaService vendaService;
-    private Scanner scanner;
+    private final ClienteService clienteService;
+    private final VendaService vendaService;
+    private final Scanner scanner;
 
     public ClienteController(ClienteService clienteService, VendaService vendaService, Scanner scanner) {
         this.clienteService = clienteService;
@@ -76,20 +73,10 @@ public class ClienteController {
             }
 
             switch (opcao) {
-                case 1:
-                    consultarProdutos();
-                    break;
-
-                case 2:
-                    realizarCompra(clienteLogado);
-                    break;
-
-                case 0:
-                    System.out.println("Saindo do menu do cliente...");
-                    break;
-
-                default:
-                    System.out.println("Opção inválida!");
+                case 1 -> consultarProdutos();
+                case 2 -> realizarCompra(clienteLogado);
+                case 0 -> System.out.println("Saindo do menu do cliente...");
+                default -> System.out.println("Opção inválida!");
             }
         }
     }
@@ -124,7 +111,6 @@ public class ClienteController {
 
             System.out.print("Quantidade: ");
             int qtd;
-
             try {
                 qtd = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
@@ -139,7 +125,6 @@ public class ClienteController {
 
             produto.reduzirEstoque(qtd);
             compra.adicionarItem(new ItemCompra(produto, qtd));
-
             System.out.println("Produto adicionado ao carrinho!");
         }
 
@@ -148,19 +133,22 @@ public class ClienteController {
             return;
         }
 
-        Sessao.compraService.registrarCompra(compra);
+        if (Sessao.compraService != null) {
+            Sessao.compraService.registrarCompra(compra);
+        }
 
-        // === REGISTRAR VENDAS CORRETAMENTE ===
         for (var item : compra.getItens()) {
-            vendaService.registrarVenda(
-                    item.getProduto().getMercado(),
-                    new Venda(
-                            item.getProduto().getNome(),
-                            item.getQuantidade(),
-                            item.getProduto().getPreco(),
-                            clienteLogado
-                    )
+
+            Mercado mercado = item.getProduto().getMercado();
+
+            Venda venda = new Venda(
+                    item.getProduto().getNome(),
+                    item.getQuantidade(),
+                    item.getProduto().getPreco(),
+                    clienteLogado
             );
+
+            mercado.registrarVenda(venda);
         }
 
         System.out.println("COMPRA FINALIZADA!");

@@ -26,8 +26,6 @@ public class Mercado extends Cadastro {
         produtos.add(produto);
     }
 
-
-
     public void registrarVenda(Venda venda) {
         vendas.add(venda);
     }

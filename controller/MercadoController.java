@@ -103,7 +103,7 @@ public class MercadoController {
             return;
         }
 
-        var vendas = vendaService.listarVendas(mercado);
+        var vendas = mercado.getVendas(); // AGORA FUNCIONA
 
         if (vendas.isEmpty()) {
             System.out.println("Nenhuma venda registrada.");
@@ -119,11 +119,9 @@ public class MercadoController {
                     " | Cliente: " + v.getCliente().getNome());
         }
 
-        System.out.println("\nTOTAL FATURADO: R$ " + vendaService.calcularTotalFaturado(mercado));
+        System.out.println("\nTOTAL FATURADO: R$ " +
+                vendaService.calcularTotalFaturado(mercado));
     }
-
-
-
 
     public void listarProdutos() {
         Mercado mercado = Sessao.mercadoLogado;

@@ -20,9 +20,7 @@ public class Main {
         VendaService vendaService = new VendaService();
 
         MercadoController mercadoController = new MercadoController(mercadoService, produtoService, vendaService, sc);
-
         ClienteController clienteController = new ClienteController(clienteService, vendaService, sc);
-
         int opc = -1;
 
         while (opc != 0) {

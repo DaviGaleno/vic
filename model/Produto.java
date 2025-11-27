@@ -10,7 +10,6 @@ public class Produto {
     private CategoriaProduto categoria;
     private Mercado mercado;
 
-
     public Produto(String nome, double preco, int estoque, CategoriaProduto categoria) {
         this.nome = nome;
         this.preco = preco;
@@ -19,6 +18,8 @@ public class Produto {
     }
 
     public Mercado getMercado() { return mercado; }
+    public void setMercado(Mercado mercado) { this.mercado = mercado; }
+
     public String getNome() { return nome; }
     public double getPreco() { return preco; }
     public int getEstoque() { return estoque; }
