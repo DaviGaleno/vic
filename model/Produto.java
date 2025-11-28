@@ -1,8 +1,9 @@
 package model;
 
 import enums.CategoriaProduto;
+import model.interfaces.IProduto;
 
-public class Produto {
+public class Produto implements IProduto {
 
     private String nome;
     private double preco;
@@ -17,14 +18,28 @@ public class Produto {
         this.categoria = categoria;
     }
 
-    public Mercado getMercado() { return mercado; }
-    public void setMercado(Mercado mercado) { this.mercado = mercado; }
+    @Override
+    public Mercado getMercado() {
+        return mercado;
+    }
 
+    public void setMercado(Mercado mercado) {
+        this.mercado = mercado;
+    }
+
+    @Override
     public String getNome() { return nome; }
+
+    @Override
     public double getPreco() { return preco; }
+
+    @Override
     public int getEstoque() { return estoque; }
+
+    @Override
     public CategoriaProduto getCategoria() { return categoria; }
-    public void reduzirEstoque(int qtd) { this.estoque -= qtd; }
+
+    public void reduzirEstoque(int qtd) { estoque -= qtd; }
 
     @Override
     public String toString() {

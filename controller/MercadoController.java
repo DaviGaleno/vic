@@ -103,7 +103,7 @@ public class MercadoController {
             return;
         }
 
-        var vendas = mercado.getVendas(); // AGORA FUNCIONA
+        var vendas = mercado.getVendas();
 
         if (vendas.isEmpty()) {
             System.out.println("Nenhuma venda registrada.");

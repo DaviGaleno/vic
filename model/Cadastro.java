@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Cadastro {
+import model.interfaces.ICadastro;
+
+public class Cadastro implements ICadastro {
 
     protected String nome;
     protected String senha;
@@ -10,10 +12,12 @@ public abstract class Cadastro {
         this.senha = senha;
     }
 
+    @Override
     public String getNome() {
         return nome;
     }
 
+    @Override
     public String getSenha() {
         return senha;
     }

@@ -1,6 +1,8 @@
 package model;
 
-public class Venda {
+import model.interfaces.IVenda;
+
+public class Venda implements IVenda {
 
     private String nomeProduto;
     private int quantidade;
@@ -16,9 +18,18 @@ public class Venda {
         this.cliente = cliente;
     }
 
+    @Override
     public String getNomeProduto() { return nomeProduto; }
+
+    @Override
     public int getQuantidade() { return quantidade; }
+
+    @Override
     public double getPrecoUnitario() { return precoUnitario; }
+
+    @Override
     public double getTotalVenda() { return totalVenda; }
+
+    @Override
     public Cliente getCliente() { return cliente; }
 }

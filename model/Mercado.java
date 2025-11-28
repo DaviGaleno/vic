@@ -1,9 +1,11 @@
 package model;
 
+import model.interfaces.IMercado;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mercado extends Cadastro {
+public class Mercado extends Cadastro implements IMercado {
 
     private String cnpj;
     private List<Produto> produtos = new ArrayList<>();
@@ -14,8 +16,14 @@ public class Mercado extends Cadastro {
         this.cnpj = cnpj;
     }
 
+    @Override
     public String getCnpj() {
         return cnpj;
+    }
+
+    @Override
+    public Produto buscarProdutoPorNome(String nome) {
+        return null;
     }
 
     public List<Produto> getProdutos() {

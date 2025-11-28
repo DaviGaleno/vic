@@ -1,6 +1,8 @@
 package model;
 
-public class ItemCompra {
+import model.interfaces.IItemCompra;
+
+public class ItemCompra implements IItemCompra {
 
     private Produto produto;
     private int quantidade;
@@ -10,14 +12,17 @@ public class ItemCompra {
         this.quantidade = quantidade;
     }
 
+    @Override
     public Produto getProduto() {
         return produto;
     }
 
+    @Override
     public int getQuantidade() {
         return quantidade;
     }
 
+    @Override
     public double getSubtotal() {
         return produto.getPreco() * quantidade;
     }
