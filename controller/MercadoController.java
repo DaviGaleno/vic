@@ -21,9 +21,7 @@ public class MercadoController {
             ProdutoService produtoService,
             VendaService vendaService,
             Scanner scanner
-    )
-
-    {
+    ) {
         this.mercadoService = mercadoService;
         this.produtoService = produtoService;
         this.vendaService = vendaService;
@@ -86,8 +84,8 @@ public class MercadoController {
             System.out.println(i + " - " + c);
             i++;
         }
-        System.out.print("Opção: ");
 
+        System.out.print("Opção: ");
         int opc = Integer.parseInt(scanner.nextLine());
         CategoriaProduto categoria = CategoriaProduto.values()[opc - 1];
 
@@ -95,35 +93,7 @@ public class MercadoController {
         System.out.println("Produto cadastrado com sucesso!");
     }
 
-    public void relatorioVendas() {
-        var mercado = Sessao.mercadoLogado;
-
-        if (mercado == null) {
-            System.out.println("Você precisa estar logado!");
-            return;
-        }
-
-        var vendas = mercado.getVendas();
-
-        if (vendas.isEmpty()) {
-            System.out.println("Nenhuma venda registrada.");
-            return;
-        }
-
-        System.out.println("\n=== RELATÓRIO DE VENDAS DO MERCADO: " + mercado.getNome() + " ===");
-
-        for (var v : vendas) {
-            System.out.println("Produto: " + v.getNomeProduto() +
-                    " | Quantidade: " + v.getQuantidade() +
-                    " | Total: R$ " + v.getTotalVenda() +
-                    " | Cliente: " + v.getCliente().getNome());
-        }
-
-        System.out.println("\nTOTAL FATURADO: R$ " +
-                vendaService.calcularTotalFaturado(mercado));
-    }
-
-    public void listarProdutos() {
+    public void gerarRelatorio() {
         Mercado mercado = Sessao.mercadoLogado;
 
         if (mercado == null) {
@@ -131,7 +101,6 @@ public class MercadoController {
             return;
         }
 
-
-        produtoService.listar(mercado);
+        mercado.gerarRelatorio();
     }
 }
